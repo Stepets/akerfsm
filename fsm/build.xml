@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="fsm" basedir="." default="jar">
+	<target name="-init">
+	</target>
+
+	<target name="compile_java" depends="-init">
+		<mkdir dir="bin" />
+
+		<path id="class.path.project">
+			<fileset dir="lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<javac srcdir="src:test"
+		       classpathref="class.path.project"
+		       destdir="bin"
+		       includes="**"
+		       debug="${java.compiler.debug}"
+		       debuglevel="lines,vars,source"
+		       source="1.5"
+		       target="1.5"
+		       encoding="UTF-8"
+		/>
+	</target>
+
+	<target name="jar" depends="-init, compile_java">
+		<jar destfile="fsm.jar" basedir="bin">
+			<fileset dir="bin" />
+			<fileset dir="src" />
+			<fileset dir="test" />
+		</jar>
+	</target>
+
+	<target name="clean" depends="-init">
+		<delete dir="bin" failonerror="no" />
+		<delete file="fsm.jar" failonerror="no" />
+		<mkdir dir="bin" />
+	</target>
+</project>
